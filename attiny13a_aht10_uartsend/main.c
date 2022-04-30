@@ -4,7 +4,7 @@
  * Created: 28.03.2022 23:23:06
  * Author : haluk
  */ 
-
+//F_CPU 1.2MHz
 #include <avr/io.h>
 #include <stdlib.h>
 #include "software_uart.h"
