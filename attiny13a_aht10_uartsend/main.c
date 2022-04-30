@@ -12,13 +12,14 @@
 #define aht_adr	0x38//aht10adres
 #define aht_res	0xBA//soft reset
 //uint8_t aht_init[]={0xE1,0x08,0x00};//init
-//uint8_t aht_trig[]={0xAC,0x33,0x00};//ölçüm başlatma
+//uint8_t aht_trig[]={0xAC,0x33,0x00};//Ã¶lÃ§Ã¼m baÃ¾latma
 int main(void)
 {
    uart_basla();
    //DDRB|=(1<<4);
    i2c_init();
    i2c_send_data(aht_adr,aht_res);//soft reset
+_delay_loop_2(100);
    i2c_adr(aht_adr, I2C_WRITE);
    i2c_data(0xE1);
    i2c_data(0x08);
@@ -34,7 +35,7 @@ int main(void)
 		 _delay_loop_2(10000);
 		i2c_read(aht_adr,6);// veri okuma
 		
-		if (i2c_gelen()){//okunan veri alındı
+		if (i2c_gelen()){//okunan veri alÃ½ndÃ½
 			uint8_t aht_data[7];
 			uint32_t aht_temp=0;
 			uint16_t sicaklik=0;
@@ -50,7 +51,7 @@ int main(void)
 			aht_hum=(((uint32_t)aht_data[1]<<16)|((uint16_t)aht_data[2]<<8)|aht_data[3])>>4;
 			aht_temp=((uint32_t)(aht_data[3]&0x0F)<<16)|((uint16_t)aht_data[4]<<8)|(aht_data[5]);
 		
-			sicaklik=((aht_temp*625)>>15)- 5000;//virgulden sonrası icin değişiklik yaptim float yer kapliyor
+			sicaklik=((aht_temp*625)>>15)- 5000;//virgulden sonrasÃ½ icin deÃ°iÃ¾iklik yaptim float yer kapliyor
 			uint8_t binler=sicaklik/1000;
 			uint8_t yuzler=(sicaklik/100)%10;
 			uint8_t onlar=(sicaklik/10)%10;
@@ -61,7 +62,7 @@ int main(void)
 			uart_gonder(0x2C);
 			uart_gonder(0x30|onlar);
 			uart_gonder(0x30|birler);
-			nem=(aht_hum*625)>>16;//virgulden sonrası icin değişiklik yaptim float yer kapliyor
+			nem=(aht_hum*625)>>16;//virgulden sonrasÃ½ icin deÃ°iÃ¾iklik yaptim float yer kapliyor
 			binler=nem/1000;
 			yuzler=(nem/100)%10;
 			onlar=(nem/10)%10;
