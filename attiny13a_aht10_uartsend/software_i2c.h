@@ -26,7 +26,7 @@
 #define SDA_HIGH		I2C_PORT|=(1<<SDA)
 
 #define I2C_SDA_HIGH	I2C_PIN&(1<<SDA)
-#define I2C_NACK		I2C_PIN&(1<<SDA)
+#define I2C_NACK	(1<<SDA)
 
 typedef enum {
 	I2C_WRITE		=0,
